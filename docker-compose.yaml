@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: my-python-app:latest
+    container_name: python-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - /Users/pavelborik/my-repos/goit-cs-hw-06:/app
+    environment:
+      MONGO_URI: "mongodb://mongo:27017/mydatabase"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - ./app/mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
